@@ -1,4 +1,4 @@
-# Project Name: LearnRight - Mini School Portal
+# Project Name: LearnRightAcademy - Mini School Portal
 
 ## Description
 

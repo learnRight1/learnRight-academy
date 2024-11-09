@@ -1,4 +1,3 @@
-// You can dynamically load courses from backend if needed
 document.addEventListener('DOMContentLoaded', async () => {
   try {
     const response = await fetch('/dashboard/courses');
