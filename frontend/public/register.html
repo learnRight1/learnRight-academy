@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Register - Learn Right Academy</title>
+    <link rel="stylesheet" href="css/styles.css" />
+  </head>
+  <body>
+    <header>
+      <nav>
+        <img src="assets/schLogo.png" alt="Learn Right Academy" class="logo" />
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="courses.html">Courses</a></li>
+          <li><a href="login.html">Login</a></li>
+        </ul>
+      </nav>
+    </header>
+
+    <section class="form-container">
+      <h2>Register</h2>
+      <form id="registerForm">
+        <label for="name">Full Name:</label>
+        <input
+          type="text"
+          id="fullName"
+          name="name"
+          placeholder="Enter your full name"
+          required
+        />
+
+        <label for="email">Email:</label>
+        <input
+          type="email"
+          id="email"
+          name="email"
+          placeholder="Enter your email"
+          required
+        />
+
+        <label for="password">Password:</label>
+        <input
+          type="password"
+          id="password"
+          name="password"
+          placeholder="Enter a secure password"
+          required
+        />
+
+        <button type="submit">Create Account</button>
+      </form>
+    </section>
+
+    <footer>
+      <img src="assets/schLogo.png" alt="LearnRight Logo" class="logo" />
+      <p>&copy; 2024 LearnRight Portal. All rights reserved.</p>
+    </footer>
+    <script src="js/nav.js"></script>
+    <script src="js/register.js"></script>
+  </body>
+</html>
