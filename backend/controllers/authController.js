@@ -1,83 +1,87 @@
 const bcrypt = require('bcryptjs');
-const db = require('../db'); // Adjust path as necessary
+const db = require('../db/db'); // Database connection
+const jwt = require('jsonwebtoken');
+const {
+  createUser,
+  getUserByEmail,
+  getUserForLogin,
+} = require('../models/User'); // Ensure proper relative path
 
 // Helper function to handle database queries
-const queryDatabase = (query, params) => {
-  return new Promise((resolve, reject) => {
-    db.query(query, params, (err, results) => {
-      if (err) {
-        return reject(err);
-      }
-      resolve(results);
-    });
-  });
+const queryDatabase = async (query, params) => {
+  try {
+    const [results] = await db.query(query, params);
+    return results;
+  } catch (err) {
+    console.error(`Database Query Error: ${err.message}`);
+    throw new Error('Database query failed.');
+  }
 };
 
-// Registration function
 exports.register = async (req, res) => {
-  const { name, email, password } = req.body;
+  const { fullName, email, password } = req.body;
 
-  // Validate the input
-  if (!name || !email || !password) {
+  if (!fullName || !email || !password) {
     return res
       .status(400)
-      .json({ message: 'Please provide name, email, and password.' });
+      .json({ message: 'Full name, email, and password are required.' });
   }
 
   try {
+    // Check if the email already exists
+    const existingUser = await getUserByEmail(email);
+
+    if (existingUser) {
+      return res.status(409).json({ message: 'Email is already in use.' });
+    }
+
     // Hash the password
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    // Save the user in the database
-
-    await queryDatabase(
-      'INSERT INTO users (name, email, password) VALUES (?, ?, ?)',
-      [name, email, hashedPassword]
-    );
+    // Create the user
+    await createUser({ fullName, email, password: hashedPassword });
 
     res.status(201).json({ message: 'User registered successfully!' });
   } catch (error) {
-    console.error(error); // Log the error
-    if (error.code === 'ER_DUP_ENTRY') {
-      return res.status(409).json({ message: 'Email already in use.' });
-    }
-    res.status(500).json({ message: 'An error occurred. Please try again.' });
+    console.error('Registration error:', error); // Log the actual error
+    res.status(500).json({ message: 'An error occurred during registration.' });
   }
 };
 
-// Login function
 exports.login = async (req, res) => {
   const { email, password } = req.body;
 
-  // Validate the input
-  if (!email || !password) {
-    return res
-      .status(400)
-      .json({ message: 'Please provide email and password.' });
-  }
-
   try {
-    const results = await queryDatabase(
-      'SELECT id, name, email, password, created_at FROM users WHERE email = ?',
-      [email]
+    console.log('Fetching user for login...');
+    const user = await getUserForLogin(email);
+
+    if (!user) {
+      console.log('User not found:', email);
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    console.log('Checking password...');
+    const isPasswordCorrect = await bcrypt.compare(password, user.password);
+
+    if (!isPasswordCorrect) {
+      console.log('Invalid password for user:', email);
+      return res.status(401).json({ message: 'Invalid password' });
+    }
+
+    console.log('Generating token...');
+    const token = jwt.sign(
+      { userId: user.id, email: user.email },
+      process.env.JWT_SECRET,
+      { expiresIn: '1h' }
     );
 
-    if (results.length === 0) {
-      return res.status(401).json({ message: 'Invalid email or password.' });
-    }
-
-    const user = results[0];
-    const isMatch = await bcrypt.compare(password, user.password);
-    if (!isMatch) {
-      return res.status(401).json({ message: 'Invalid email or password.' });
-    }
-
-    // Exclude password from the response
-    const { password: _, ...userData } = user; // Destructure to remove password
-
-    res.status(200).json({ message: 'Login successful!', user: userData });
+    console.log('Login successful!');
+    res.status(200).json({
+      message: 'Login successful',
+      token,
+    });
   } catch (error) {
-    console.error(error); // Log the error
-    res.status(500).json({ message: 'Error processing request.' });
+    console.error('Error during login:', error);
+    res.status(500).json({ message: 'An error occurred during login.' });
   }
 };

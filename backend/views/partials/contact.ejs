@@ -3,18 +3,11 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="css/styles.css" />
+    <link rel="stylesheet" href="/css/styles.css" />
     <title>Contact Us</title>
   </head>
   <body>
-    <header>
-      <nav>
-        <a href="index.html">Home</a>
-        <a href="about.html">About</a>
-        <a href="courses.html">Courses</a>
-        <a href="login.html">Login</a>
-      </nav>
-    </header>
+    <%- include('partials/header') %>
 
     <section class="contact-section">
       <h1>Contact Us</h1>
@@ -23,15 +16,15 @@
         us using the form below. We are here to help you!
       </p>
 
-      <form id="contactForm">
+      <form id="contactForm" action="/submit-contact-form" method="POST">
         <label for="name">Full Name:</label>
-        <input type="text" id="name" required />
+        <input type="text" id="name" name="name" required />
 
         <label for="email">Email:</label>
-        <input type="email" id="email" required />
+        <input type="email" id="email" name="email" required />
 
         <label for="message">Message:</label>
-        <textarea id="message" rows="5" required></textarea>
+        <textarea id="message" name="message" rows="5" required></textarea>
 
         <button type="submit">Send Message</button>
       </form>
@@ -44,8 +37,8 @@
       </div>
     </section>
 
-    <footer>
-      <p>&copy; 2024 Our School LearnRight. All Rights Reserved.</p>
-    </footer>
+    <%- include('partials/footer') %>
+
+    <script src="/js/navbar.js"></script>
   </body>
 </html>

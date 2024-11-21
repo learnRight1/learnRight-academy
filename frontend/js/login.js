@@ -7,18 +7,22 @@ document.getElementById('loginForm').addEventListener('submit', async e => {
   try {
     const response = await fetch('http://localhost:3000/api/auth/login', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: {
+        'Content-Type': 'application/json',
+      },
       body: JSON.stringify({ email, password }),
     });
 
-    const data = await response.json();
-    if (data.success) {
-      // Redirect to dashboard
-      window.location.href = 'dashboard.html';
-    } else {
-      alert(data.message);
+    if (!response.ok) {
+      const error = await response.json();
+      throw new Error(error.message || 'Login failed');
     }
-  } catch (err) {
-    console.error('Error:', err);
+
+    const data = await response.json();
+    alert(data.message); // Provide feedback to the user
+    localStorage.setItem('authToken', data.token);
+    window.location.href = 'dashboard.html'; // Redirect to dashboard after successful login
+  } catch (error) {
+    console.error('Error:', error.message);
   }
 });

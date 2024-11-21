@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Register - Learn Right Academy</title>
+    <link rel="stylesheet" href="/css/styles.css" />
+  </head>
+  <body>
+    <%- include('partials/header') %>
+    <!-- Including the header partial -->
+
+    <section class="register-section">
+      <h1>Register</h1>
+
+      <form id="registerForm" action="/register" method="POST">
+        <div class="form-group">
+          <label for="fullName">Full Name</label>
+          <input type="text" id="fullName" name="fullName" required />
+        </div>
+
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input type="email" id="email" name="email" required />
+        </div>
+
+        <div class="form-group">
+          <label for="password">Password</label>
+          <input type="password" id="password" name="password" required />
+        </div>
+
+        <button type="submit">Register</button>
+      </form>
+    </section>
+
+    <script src="/js/register.js"></script>
+    <!-- External JS for form handling -->
+    <script src="/js/navbar.js"></script>
+    <!-- Navbar JS for menu handling -->
+
+    <%- include('partials/footer') %>
+    <!-- Including the footer partial -->
+  </body>
+</html>

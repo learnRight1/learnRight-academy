@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title><%= title %></title>
+    <link rel="stylesheet" href="/css/styles.css" />
+    <script src="/js/navbar.js" defer></script>
+  </head>
+  <body>
+    <%- include('partials/header') %>
+
+    <section class="hero">
+      <h2>Welcome to Our School Portal</h2>
+      <p>
+        Find out more about our courses, register, and get in touch with us.
+      </p>
+      <a href="/courses" class="btn">Explore Courses</a>
+      <a href="/register" class="btn">Register</a>
+    </section>
+
+    <!-- Testimonial Section -->
+    <section class="testimonial-section">
+      <div class="testimonial-card">
+        <h3>John Doe</h3>
+        <p>Great service! Highly recommend.</p>
+      </div>
+      <div class="testimonial-card">
+        <h3>Jane Smith</h3>
+        <p>The team was fantastic to work with. Very professional.</p>
+      </div>
+      <div class="testimonial-card">
+        <h3>Mike Johnson</h3>
+        <p>Excellent experience! I will definitely come back.</p>
+      </div>
+    </section>
+
+    <%- include('partials/footer') %>
+  </body>
+</html>

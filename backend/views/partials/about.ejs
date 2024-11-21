@@ -3,18 +3,12 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="css/styles.css" />
+    <link rel="stylesheet" href="/css/styles.css" />
     <title>About Us</title>
   </head>
   <body>
-    <header>
-      <nav>
-        <a href="index.html">Home</a>
-        <a href="courses.html">Courses</a>
-        <a href="contact.html">Contact Us</a>
-        <a href="login.html">Login</a>
-      </nav>
-    </header>
+    <!-- Include the header -->
+    <%- include('partials/header') %>
 
     <section class="about-section">
       <h1>About Our School</h1>
@@ -41,22 +35,23 @@
       <h2>Meet Our Team</h2>
       <div class="team">
         <div class="team-member">
-          <img src="images/team1.jpg" alt="Team Member 1" />
+          <img src="/images/team1.jpg" alt="Team Member 1" />
           <p>Ezekiel Samuel O. - Principal</p>
         </div>
         <div class="team-member">
-          <img src="images/team2.jpg" alt="Team Member 2" />
+          <img src="/images/team2.jpg" alt="Team Member 2" />
           <p>Mrs. Ezekiel Oluwadamilola - Head of Department</p>
         </div>
         <div class="team-member">
-          <img src="images/team3.jpg" alt="Team Member 3" />
+          <img src="/images/team3.jpg" alt="Team Member 3" />
           <p>Mr. David Williams - Lecturer</p>
         </div>
       </div>
     </section>
 
-    <footer>
-      <p>&copy; 2024 Our School LearnRight. All Rights Reserved.</p>
-    </footer>
+    <!-- Include the footer -->
+    <%- include('partials/footer') %>
+
+    <script src="/js/navbar.js"></script>
   </body>
 </html>

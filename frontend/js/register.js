@@ -1,9 +1,13 @@
-const registerUser = async event => {
-  event.preventDefault();
+document.getElementById('registerForm').addEventListener('submit', async e => {
+  e.preventDefault();
 
-  const name = document.getElementById('name').value;
+  const fullName = document.getElementById('fullName').value;
   const email = document.getElementById('email').value;
   const password = document.getElementById('password').value;
+
+  if (!fullName || !email || !password) {
+    return alert('Please fill in all fields.');
+  }
 
   try {
     const response = await fetch('http://localhost:3000/api/auth/register', {
@@ -11,23 +15,18 @@ const registerUser = async event => {
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ name, email, password }),
+      body: JSON.stringify({ fullName, email, password }),
     });
 
-    const data = await response.json();
-
-    if (response.ok) {
-      alert(data.message); // Success message
-    } else {
-      alert(data.message); // Error message
+    if (!response.ok) {
+      const error = await response.json();
+      throw new Error(error.message || 'Failed to register user');
     }
-  } catch (error) {
-    console.error('Error:', error);
-    alert('An unexpected error occurred.'); // Handle fetch errors
-  }
-};
 
-// Attach the function to your form submit event
-document
-  .getElementById('registerForm')
-  .addEventListener('submit', registerUser);
+    const data = await response.json();
+    alert(data.message);
+    window.location.href = 'login.html'; // Redirect to login after successful registration
+  } catch (error) {
+    console.error('Error:', error.message);
+  }
+});

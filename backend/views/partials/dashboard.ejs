@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dashboard - Learn Right Academy</title>
+    <link rel="stylesheet" href="/css/styles.css" />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  </head>
+  <body>
+    <%- include('partials/header') %>
+    <!-- Including the header partial -->
+
+    <section class="chart-section">
+      <h1>Dashboard</h1>
+      <canvas id="enrollmentChart"></canvas>
+    </section>
+
+    <script src="/js/dashboard.js"></script>
+    <!-- External JS file for the chart -->
+    <%- include('partials/footer') %>
+    <!-- Including the footer partial -->
+  </body>
+</html>
